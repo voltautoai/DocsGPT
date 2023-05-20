@@ -1,3 +1,9 @@
+#ingestors input
+ingestors/inputs/
+
+#idea
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -10,6 +16,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
+dist/
 downloads/
 eggs/
 .eggs/
@@ -108,7 +115,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-.flaskenv
+
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -126,47 +133,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-#pycharm
-.idea/
-
-# macOS
-.DS_Store
-
-#frontend
-# Logs
-frontend/logs
-frontend/*.log
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log*
-frontend/pnpm-debug.log*
-frontend/lerna-debug.log*
-
-frontend/node_modules
-frontend/dist
-frontend/dist-ssr
-frontend/*.local
-
-# Editor directories and files
-frontend/.vscode/*
-frontend/!.vscode/extensions.json
-frontend/.idea
-frontend/.DS_Store
-frontend/*.suo
-frontend/*.ntvs*
-frontend/*.njsproj
-frontend/*.sln
-frontend/*.sw?
-
-application/vectors/
-
-**/inputs
-
-**/indexes
-
-**/temp
-
-**/yarn.lock
-
-node_modules/
+*.DS_Store

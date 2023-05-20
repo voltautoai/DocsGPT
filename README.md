@@ -1,104 +1,100 @@
 <h1 align="center">
-  DocsGPT  🦖
+  DocsHUB 
 </h1>
 
 <p align="center">
-  <strong>Open-Source Documentation Assistant</strong>
+  <strong>Repository to store and share vector stores / embedding for LLM models</strong>
 </p>
 
 <p align="left">
-  <strong>DocsGPT</strong> is a cutting-edge open-source solution that streamlines the process of finding information in project documentation. With its integration of the powerful <strong>GPT</strong> models, developers can easily ask questions about a project and receive accurate answers.
+  <strong>DocsHUB</strong> is a open-source solution for storing vectors for LLM models. Like a package manager but for vector stores.
   
-Say goodbye to time-consuming manual searches, and let <strong>DocsGPT</strong> help you quickly find the information you need. Try it out and see how it revolutionizes your project documentation experience. Contribute to its development and be a part of the future of AI-powered assistance.
+Say goodbye to time-consuming scraping and embedding, and let <strong>DocsHUB</strong> speed up your project by providing you with latest embeddings
 </p>
 
-<div align="center">
-  
-  <a href="https://discord.gg/n5BX8dh8rU">![example1](https://img.shields.io/github/stars/arc53/docsgpt?style=social)</a>
-  <a href="https://discord.gg/n5BX8dh8rU">![example2](https://img.shields.io/github/forks/arc53/docsgpt?style=social)</a>
-  <a href="https://discord.gg/n5BX8dh8rU">![example3](https://img.shields.io/github/license/arc53/docsgpt)</a>
-  <a href="https://discord.gg/n5BX8dh8rU">![example3](https://img.shields.io/discord/1070046503302877216)</a>
-  
-</div>
-
-![video-example-of-docs-gpt](https://d3dg1063dc54p9.cloudfront.net/videos/demov3.gif)
 
 
-## Features
-
-![Group 9](https://user-images.githubusercontent.com/17906039/220427472-2644cff4-7666-46a5-819f-fc4a521f63c7.png)
+## Todo list
+- Github workflows to prepare json document with indexes ✅
+- Public list to make it usable (index) ✅
+- Website with search
+- API for search
 
 
 
-## Roadmap
 
-You can find our [Roadmap](https://github.com/orgs/arc53/projects/2) here, please don't hesitate contributing or creating issues, it helps us make DocsGPT better!
-
-
-
-## [Live preview](https://docsgpt.arc53.com/)
-
-## [Join Our Discord](https://discord.gg/n5BX8dh8rU)
+## [Join Our Parent Project DocsGPT Discord](https://discord.gg/n5BX8dh8rU)
 
 
 ## Project structure
-- Application - flask app (main application)
+vectors - where all vecor stores are
 
-- Extensions - chrome extension
-
-- Scripts - script that creates similarity search index and store for other libraries. 
-
-- frontend - frontend in vite and
-
-## QuickStart
-
-Note: Make sure you have docker installed
-
-1. Open dowload this repository with `git clone https://github.com/arc53/DocsGPT.git`
-2. Create .env file in your root directory and set your OPENAI_API_KEY with your openai api key
-3. Run `docker-compose build && docker-compose up`
-4. Navigate to http://localhost:5173/
-
-To stop just run Ctrl + C
-
-## Development environments
-
-Spin up only 2 containers from docker-compose.yaml (by deleting all services except for redis and mongo)
-
-Make sure you have python 3.10 or 3.11 installed
-
-1. Navigate to `/application` folder
-2. Run `docker-compose -f docker-compose-dev.yaml build && docker-compose -f docker-compose-dev.yaml up -d`
-3. Export required variables              
-`export CELERY_BROKER_URL=redis://localhost:6379/0`   
-`export CELERY_RESULT_BACKEND=redis://localhost:6379/1`
-`export MONGO_URI=mongodb://localhost:27017/docsgpt`
-4. Install dependencies
-`pip install -r requirements.txt`
-5. Prepare .env file
-Copy .env_sample and create .env with your openai api token
-6. Run the app
-`python wsgi.py`
-7. Start worker with `celery -A app.celery worker -l INFO`
-
-To start frontend
-1. Navigate to `/frontend` folder
-2. Install dependencies
-`npm install`
-3. Run the app
-4. `npm run dev`
+ingestors - scripts to prepare and ingest data into vector stores
 
 
-[How to install the Chrome extension](https://github.com/arc53/docsgpt/wiki#launch-chrome-extension)
+## How to use it:
+Just navigate to a folder you need ```vectors/<language>/<library_name>/<version>/<embeddings_model>```
+And download:
+docs.index, faiss_store.pkl
+
+You can also use this index to find items you need in here (updated on every push)
+
+```https://d3dg1063dc54p9.cloudfront.net/combined.json```
+
+## How to contribute:
+Anyone can create a pull request. It should contain 3 files
+1. index.faiss
+2. index.pkl
+3. metadata.json
 
 
-## [Guides](https://github.com/arc53/docsgpt/wiki)
+Ensure the path is correct 
+```
+  vectors/<language>/<library_name>/<version>/<embeddings_model>
+```
 
-## [Interested in contributing?](https://github.com/arc53/DocsGPT/blob/main/CONTRIBUTING.md)
+if its actual python (language itself) for example use
+```
+vectors/python/.project/version/
+```
+And in a corresponding path
 
-## [How to use any other documentation](https://github.com/arc53/docsgpt/wiki/How-to-train-on-other-documentation)
+Metadata is a json document with this fields:
+- name
+- language
+- version
+- description (one or two sectences)
+- fullName (Full project name not a slug name)
+- date (to know when it was last updated)
+- docLink (link to the documentation that was used for it)
+- model (embeddings model that was used to generate the vectors
 
-## [How to host it locally (so all data will stay on-premises)](https://github.com/arc53/DocsGPT/wiki/How-to-use-different-LLM's#hosting-everything-locally)
+For embeddings model please use ```<providerName_modelName>```
+Example:
+```
+OpenAI:
+openai_text-embedding-ada-002
+
+Huggingface:
+huggingface_sentence-transformers/all-mpnet-base-v2
+
+Cohere:
+cohere_medium
+```
+
+Example of metadata.json
+```
+{
+  "name": "pandas",
+  "language": "python",
+  "version": "1.5.3",
+  "description": "Pandas is alibrary providing high-performance, easy-to-use data structures and data analysis tools for the Python programming language.",
+  "fullName": "Pandas",
+  "date": "07/02/2023",
+  "docLink": "https://pandas.pydata.org/docs/",
+  "model": "openai_text-embedding-ada-002"
+}
+```
 
 Built with [🦜️🔗 LangChain](https://github.com/hwchase17/langchain)
 
